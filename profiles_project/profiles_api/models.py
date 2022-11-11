@@ -24,7 +24,7 @@ class UserProfileManager(BaseUserManager):
     def create_superuser(self, email, name, password):
         """Create and save a new superuser with given details"""
         user = self.create_user(email, name, password)
-
+        
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
@@ -45,7 +45,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     objects = UserProfileManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = ['name']
+    #REQUIRED_FIELDS only makes it so that createsuperuser prompts for a value.Empty values may still be accepted, depending on the value of the field's blank attribute.
+    REQUIRED_FIELDS = ['name'] 
 
     def get_full_name(self):
         """Retrive Full name of user"""
